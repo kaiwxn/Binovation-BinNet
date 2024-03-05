@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Binnet</title>
+    <title>{{title}}</title>
 </head>
 <body>
-    <p>Hier ist die erste Website für Binnet!</p>
+    {% include "binnetapp/navbar.html" %}
+
+    <p>Hier ist die Hauptwebsite für Binnet!</p>
+    {% block hauptinhalt %}
+    {% endblock %}
+
 </body>
 </html>

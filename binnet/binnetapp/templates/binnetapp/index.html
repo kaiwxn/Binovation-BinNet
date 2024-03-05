@@ -1,0 +1,38 @@
+
+{% extends "binnetapp/base.html" %}
+
+{% block hauptinhalt%}
+<h1>Index</h1>
+<!DOCTYPE html>
+        <html>
+            <head>
+                <title>OSM and Leaflet</title>
+                <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+                <link rel = "stylesheet" href = style.css/>
+            </head>
+            <body>
+                <div id = "map" style = "width: 900px; height: 580px"></div>
+                    <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+                <script>
+                    // Creating map options
+                    var mapOptions = {
+                        center: [48.060863614253165, 11.670241807559309], // Set center of Map to "Wolf-Ferrari-Haus"
+                        zoom: 14,
+                        minZoom: 14,
+                    }
+
+                    // Creating a map object
+                    var map = new L.map('map', mapOptions);
+
+                    // Creating a Layer object
+                    var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+                    
+                    // Adding layer to the map
+                    map.addLayer(layer);
+
+                    L.marker([48.060863614253165, 11.670241807559309]).addTo(map);
+                </script>
+            </body>
+           
+    </html>
+{% endblock %}
