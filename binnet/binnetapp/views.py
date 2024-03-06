@@ -13,9 +13,12 @@ def index(request):
             form.save()
             return redirect("index")
     
+    data = [[m.id, m.lat, m.lon] for m in Mülleimer.objects.all()] 
+
     context = {
         "title": "Binnet - Home",
         "form": form,
+        "data": data,
     }
     
     return render(request, "binnetapp\index.html", context)
