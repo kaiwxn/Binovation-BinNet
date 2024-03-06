@@ -1,29 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from .models import Mülleimer
+from .forms import MülleimerForm
 
 # Create your views here.
 def index(request):
+
+    form = MülleimerForm()
+
+    if request.method == "POST":
+        form = MülleimerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    
     context = {
         "title": "Binnet - Home",
+        "form": form,
     }
-
+    
     return render(request, "binnetapp\index.html", context)
 
-def create(request):
-    context = {
-        "title": "Binnet - Create",
-    }
-
-    return render(request, "binnetapp\create.html", context)
-
-def overview(request):
-    context = {
-        "title": "Binnet - Overview",
-    }
-
-    return render(request, "binnetapp\overview.html", context)
-
 def detail(request):
+
+    mülleimer = Mülleimer.objects.all()
     context = {
+        "mülleimer": mülleimer,
         "title": "Binnet - Detail",
     }
 

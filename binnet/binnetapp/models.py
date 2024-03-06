@@ -8,5 +8,6 @@ class Mülleimer(models.Model):
     hatSensor = models.BooleanField(default=False)
     standort = models.CharField(max_length=100)
 
-    def __int__(self):
-        return self.id
+    def __str__(self):
+        
+        return f"Mülleimer: {self.id}"
