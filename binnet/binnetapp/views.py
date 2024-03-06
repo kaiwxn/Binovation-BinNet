@@ -13,6 +13,7 @@ def index(request):
             form.save()
             return redirect("index")
     
+    # Change from Form object to list 
     data = [[m.id, m.lat, m.lon] for m in Mülleimer.objects.all()] 
 
     context = {
