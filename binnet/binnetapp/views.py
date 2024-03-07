@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from .models import Mülleimer
 from .forms import MülleimerForm
 
-# Create your views here.
 def index(request):
 
     form = MülleimerForm()
@@ -13,7 +12,7 @@ def index(request):
             form.save()
             return redirect("index")
     
-    # Change from Form object to list 
+    # Change Form object to list 
     data = [[m.id, m.lat, m.lon] for m in Mülleimer.objects.all()] 
 
     context = {
@@ -23,6 +22,7 @@ def index(request):
     }
     
     return render(request, "binnetapp\index.html", context)
+
 
 def detail(request):
 
