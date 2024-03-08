@@ -1,23 +1,32 @@
 from django.shortcuts import redirect, render
-from .models import Mülleimer
-from .forms import MülleimerForm
+from .models import Bin
+from .forms import BinForm, MeasurementForm
 
 def index(request):
 
-    form = MülleimerForm()
-
+    # Form for Mülleimer
+    formBin = BinForm()
     if request.method == "POST":
-        form = MülleimerForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formBin = BinForm(request.POST)
+        if formBin.is_valid():
+            formBin.save()
+            return redirect("index")
+    
+    # Form for Messung
+    formMeasurement = MeasurementForm()
+    if request.method == "POST":
+        formMeasurement = MeasurementForm(request.POST)
+        if formMeasurement.is_valid():
+            formMeasurement.save()
             return redirect("index")
     
     # Change Form object to list 
-    data = [[m.id, m.lat, m.lon] for m in Mülleimer.objects.all()] 
+    data = [[m.id, m.lat, m.lon] for m in Bin.objects.all()] 
 
     context = {
         "title": "Binnet - Home",
-        "form": form,
+        "formBin": formBin,
+        "formMeasurement": formMeasurement,
         "data": data,
     }
     
@@ -26,9 +35,9 @@ def index(request):
 
 def detail(request):
 
-    mülleimer = Mülleimer.objects.all()
+    bins = Bin.objects.all()
     context = {
-        "mülleimer": mülleimer,
+        "bins": bins,
         "title": "Binnet - Detail",
     }
 

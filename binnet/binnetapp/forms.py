@@ -1,11 +1,17 @@
 from django.forms import ModelForm
 
-from .models import Mülleimer
+from .models import Bin, Measurement
 
 
-class MülleimerForm(ModelForm):
+class BinForm(ModelForm):
     
     class Meta: # Metadaten
-        model = Mülleimer 
+        model = Bin 
         fields = "__all__"
 
+
+class MeasurementForm(ModelForm):
+
+    class Meta: 
+        model = Measurement
+        fields = "__all__"

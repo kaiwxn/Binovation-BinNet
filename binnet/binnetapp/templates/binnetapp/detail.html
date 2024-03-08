@@ -7,8 +7,8 @@
 
 <p>Hier sind alle Daten der Mülleimer eingetragen:</p>
 
-{% for object in mülleimer%}
-    <p>hatSensor: {{object.hatSensor}} | Standort: {{object.lat}}; {{object.lon}}</p>
+{% for bin in bins %}
+    <p>hatSensor: {{bin.hasSensor}} | Standort: {{bin.lat}}; {{bin.lon}}</p>
 {% endfor %}
 
 

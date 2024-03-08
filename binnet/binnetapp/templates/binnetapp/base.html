@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +11,8 @@
     <!-- Leaflet -->
     <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
     <!-- Static CSS -->
-    <link rel="stylesheet" href="{% static 'binnetapp/style.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'binnetapp/css/style.css' %}">
 
     <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     
@@ -21,7 +21,7 @@
 <body>
     {% include "binnetapp/navbar.html" %}
 
-    <p>Hier ist die Hauptwebsite für Binnet!</p>
+    <p> Hier ist die Hauptwebsite für Binnet! </p>
 
     {% block hauptinhalt %}
     {% endblock %}

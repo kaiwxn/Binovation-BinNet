@@ -6,22 +6,32 @@
     <h1>Index</h1>
 
     <hr>
+    
+    <p class="form-description"> Hier können Sie die Daten für die Mülleimer eintragen.</p>
 
     <div class="form-div">
-
-        <p class="form-description">
-            Hier können Sie die Daten für die Mülleimer eintragen.
-        </p>
+        <p>Mülleimer:</p>
         <form action="" method="POST">
             {% csrf_token %}
-            {{ form }}
+            {{ formBin }}
+            <input type="submit" name="Submit">
+        </form>
+    </div>
+
+    <br>
+
+    <div class="form-div">
+        <p>Messung:</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ formMeasurement }}
             <input type="submit" name="Submit">
         </form>
     </div>
 
     <hr>
 
-    <div id = "map" style = "width: 900px; height: 580px"></div>
+    <div id = "map" style="width: 900px; height: 500px"></div>
 </div>
 
 <!-- Data of garbage bins -->
@@ -29,6 +39,6 @@
 
 <!-- Javascript for Leaflet -->
 {% load static %}
-<script src="{% static 'binnetapp/script.js' %}"></script>
+<script src="{% static 'binnetapp/script/script.js' %}"></script>
 
 {% endblock %}
