@@ -4,6 +4,7 @@ from django.db import models
 
 class Bin(models.Model):
 
+    # Fields of database table
     id = models.AutoField(primary_key = True)
     hasSensor = models.BooleanField(default = False)
     lat = models.FloatField(default = 0.0)
@@ -13,6 +14,8 @@ class Bin(models.Model):
         return f"Mülleimer: {self.id}"
     
 class Measurement(models.Model):
+
+    # Fields of database table
     id = models.AutoField(primary_key = True)
     bin = models.ForeignKey(Bin, on_delete = models.CASCADE)
     value = models.FloatField(default = 0.0)
