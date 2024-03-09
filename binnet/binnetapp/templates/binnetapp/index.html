@@ -1,0 +1,44 @@
+
+{% extends "binnetapp/base.html" %}
+
+{% block hauptinhalt %}
+<div class="index-div">
+    <h1>Index</h1>
+
+    <hr>
+    
+    <p class="form-description"> Hier können Sie die Daten für die Mülleimer eintragen.</p>
+
+    <div class="form-div">
+        <p>Mülleimer:</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ formBin }}
+            <input type="submit" name="Submit">
+        </form>
+    </div>
+
+    <br>
+
+    <div class="form-div">
+        <p>Messung:</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ formMeasurement }}
+            <input type="submit" name="Submit">
+        </form>
+    </div>
+
+    <hr>
+
+    <div id = "map" style="width: 900px; height: 500px"></div>
+</div>
+
+<!-- Data of garbage bins -->
+{{data | json_script:"bin-data"}}
+
+<!-- Javascript for Leaflet -->
+{% load static %}
+<script src="{% static 'binnetapp/script/script.js' %}"></script>
+
+{% endblock %}

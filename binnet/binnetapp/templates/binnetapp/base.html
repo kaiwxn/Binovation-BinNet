@@ -1,0 +1,30 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    
+    <!-- Leaflet -->
+    <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <!-- Static CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'binnetapp/css/style.css' %}">
+
+    <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    
+
+</head>
+<body>
+    {% include "binnetapp/navbar.html" %}
+
+    <p> Hier ist die Hauptwebsite für BinNet! </p>
+
+    {% block hauptinhalt %}
+    {% endblock %}
+
+</body>
+</html>

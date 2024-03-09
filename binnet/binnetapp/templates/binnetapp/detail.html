@@ -1,0 +1,15 @@
+
+{% extends "binnetapp/base.html" %}
+
+{% block hauptinhalt %}
+
+<h1>Details</h1>
+
+<p>Hier sind alle Daten der Mülleimer eingetragen:</p>
+
+{% for bin in bins %}
+    <p>hatSensor: {{bin.hasSensor}} | Standort: {{bin.lat}}; {{bin.lon}}</p>
+{% endfor %}
+
+
+{% endblock %}
