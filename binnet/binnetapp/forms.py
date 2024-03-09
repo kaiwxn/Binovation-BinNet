@@ -1,17 +1,17 @@
-from django.forms import ModelForm
+from django import forms
 
-from .models import Bin, Measurement
+from .models import Bin
 
 
-class BinForm(ModelForm):
+class BinForm(forms.ModelForm):
     
     class Meta: # Metadaten
         model = Bin 
         fields = "__all__"
 
 
-class MeasurementForm(ModelForm):
+# Not a ModelForm due to different data type
+class MeasurementForm(forms.Form):
 
-    class Meta: 
-        model = Measurement
-        fields = "__all__"
+    values = forms.CharField(max_length=500)
+    bin = forms.ModelChoiceField(queryset=Bin.objects.all()) # Dropdown
