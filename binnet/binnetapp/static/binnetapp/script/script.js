@@ -19,11 +19,11 @@ map.addLayer(layer);
 // Add markers to the map
 const data = JSON.parse(document.getElementById('bin-data').textContent);
 
-for (var i = 0; i < data.length; i++){
+for (var i = 0; i < data.length; i++) {
     id = data[i][0];
-    lat = data[i][1];
-    lon = data[i][2];
+    latitude = data[i][1];
+    longitude = data[i][2];
 
     L.marker([lat, lon]).addTo(map)
-        .bindPopup("Mülleimer " + id + " " + "lat: " + lat + " lon: " + lon);
+        .bindPopup("Mülleimer " + id + " " + "lat: " + latitude + " lon: " + longitude);
 }

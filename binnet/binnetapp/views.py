@@ -37,7 +37,7 @@ def index(request):
     
 
     # Change Form object to list for displaying markers on map
-    data = [[m.id, m.lat, m.lon] for m in Bin.objects.all()] 
+    data = [[m.id, m.latitude, m.longitude] for m in Bin.objects.all()] 
 
     context = {
         "title": "Binnet - Home",

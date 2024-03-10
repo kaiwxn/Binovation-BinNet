@@ -7,8 +7,8 @@ class Bin(models.Model):
     # Fields of database table
     id = models.AutoField(primary_key = True)
     hasSensor = models.BooleanField(default = False)
-    lat = models.FloatField(default = 0.0)
-    lon = models.FloatField(default = 0.0)
+    latitude = models.FloatField(default = 0.0)
+    longitude = models.FloatField(default = 0.0)
 
     def __str__(self):
         return f"Mülleimer: {self.id}"
