@@ -24,6 +24,6 @@ for (var i = 0; i < data.length; i++) {
     latitude = data[i][1];
     longitude = data[i][2];
 
-    L.marker([lat, lon]).addTo(map)
+    L.marker([latitude, longitude]).addTo(map)
         .bindPopup("Mülleimer " + id + " " + "lat: " + latitude + " lon: " + longitude);
 }

@@ -1,4 +1,21 @@
 body {
     background-color: rgb(210, 248, 215);
-    background-color: red;
+}
+
+.index-div {
+    margin: 1%;
+}
+
+.container {
+    display: flex;
+}
+
+.forms {
+    display: block;
+}
+
+#map {
+    margin: 10px auto 10px 50px;
+    width: 1000px;
+    height: 600px;
 }
