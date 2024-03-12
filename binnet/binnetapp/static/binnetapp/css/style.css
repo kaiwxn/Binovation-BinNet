@@ -1,7 +1,36 @@
+/* general css */
+
 body {
+    margin: 0px auto auto auto;
     background-color: rgb(210, 248, 215);
 }
 
+/* navbar css */
+.navbar {
+    margin: 0;
+    padding: 10px 10px;
+    background-color: rgb(133, 144, 155);
+    font-size: x-large;
+}
+
+.navbar-title {
+    padding: 10px 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-right: 20px;
+}
+
+.navbar-item {
+    margin: 10px auto;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+
+.navbar-item:hover {
+    background-color: rgb(115, 124, 134);
+}
+
+
+/* index css */
 .index-div {
     margin: 1%;
 }
@@ -18,4 +47,10 @@ body {
     margin: 10px auto 10px 50px;
     width: 1000px;
     height: 600px;
+}
+
+/* display css */
+
+.display-div {
+    margin: 1% 30% auto 1%;
 }
