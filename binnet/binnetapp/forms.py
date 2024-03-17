@@ -19,3 +19,7 @@ class MeasurementForm(forms.Form):
 
     # Dropdown menu for all available bins
     bin = forms.ModelChoiceField(queryset=Bin.objects.all()) 
+
+    # Date and time for the measurement
+    startingDate = forms.DateField()
+    startingTime = forms.TimeField()
