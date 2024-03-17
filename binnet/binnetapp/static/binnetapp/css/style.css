@@ -29,6 +29,13 @@ body {
     background-color: rgb(115, 124, 134);
 }
 
+.navbar-item:visited {
+    color: black;
+}
+
+.navbar-item:active {
+    color: white;
+}
 
 /* index css */
 .index-div {

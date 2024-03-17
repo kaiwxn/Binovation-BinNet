@@ -25,7 +25,7 @@ class Measurement(models.Model):
     
     # Date and time of measurement
     measureTime = models.TimeField(default = datetime.time(0, 0, 0)) # 00:00 as default
-    measureDate = models.DateField(default = timezone.now) # Monday as default
+    measureDate = models.DateField(default = timezone.now()) # Monday as default
 
     def __str__(self):
         return f"Messung: {self.id}"
