@@ -15,7 +15,7 @@ class MeasurementForm(forms.Form):
 
     # Input is stored as a string separated by spaces, 
     # to avoid manually entering all measurements one by one
-    values = forms.CharField(max_length=500)
+    values = forms.CharField(max_length=2000)
 
     # Dropdown menu for all available bins
     bin = forms.ModelChoiceField(queryset=Bin.objects.all()) 

@@ -24,6 +24,7 @@ def calculateFillRate(val) -> float:
 
 def solveIncreasingValues() -> list[list[int]]:
 
+    # input: 
     values = [5, 12, 5, 58, 59, 57, 12, 34, 67]
     weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     

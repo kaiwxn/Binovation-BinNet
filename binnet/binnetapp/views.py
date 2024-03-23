@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 
 from .models import Bin, Measurement
 from .forms import BinForm, MeasurementForm
-
+from .calculate import calculateRanking
 import datetime
 
 def processDateTime(values, binId, date, time):
@@ -23,15 +23,16 @@ def processDateTime(values, binId, date, time):
                         measureDate = date_obj.date()
                         ))
         
-        
         # Add one hour to time
-        time_obj = time_obj + datetime.timedelta(hours = 1)
+        time_obj += datetime.timedelta(hours = 1)
 
         # Add one day to date if time is 00:00
         if time_obj.hour == 0:
-            date_obj = date_obj + datetime.timedelta(days = 1)
+            date_obj += datetime.timedelta(days = 1)
 
+    # Return list of measurement objects
     return measurements
+
 
 # Views for the application
 def index(request):

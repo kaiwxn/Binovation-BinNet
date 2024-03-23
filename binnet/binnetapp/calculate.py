@@ -1,0 +1,4 @@
+
+
+def calculateRanking() -> int:
+    return

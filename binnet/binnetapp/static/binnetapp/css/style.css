@@ -11,6 +11,7 @@ body {
     padding: 10px 10px;
     background-color: rgb(133, 144, 155);
     font-size: x-large;
+    user-select: none;
 }
 
 .navbar-title {
