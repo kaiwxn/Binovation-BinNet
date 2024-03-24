@@ -3,9 +3,10 @@ from django.shortcuts import redirect, render
 from .models import Bin, Measurement
 from .forms import BinForm, MeasurementForm
 from .calculate import calculateRanking
+
 import datetime
 
-def processDateTime(values, binId, date, time):
+def processDateTime(values, binId, date, time) -> list[Measurement]:
     measurements = []
 
     # Convert date and time to datetime objects for easier handling
@@ -68,6 +69,9 @@ def index(request):
                 # Create multiple entries of Measurement
                 measurements = processDateTime(values, binId, date, time)
                 Measurement.objects.bulk_create(measurements)
+                
+                # Alter bin color based on calculation
+                Bin.objects.get(id = binId).color = calculateRanking(measurements)
 
                 return redirect("index")
         else:
@@ -75,7 +79,7 @@ def index(request):
 
 
     # Change Form object to list for displaying markers on map
-    data = [[m.id, m.latitude, m.longitude] for m in Bin.objects.all()] 
+    data = [[m.id, m.latitude, m.longitude, m.color] for m in Bin.objects.all()] 
 
     context = {
         "title": "Binnet - Home",

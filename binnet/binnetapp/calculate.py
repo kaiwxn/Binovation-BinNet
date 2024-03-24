@@ -1,4 +1,6 @@
 
 
-def calculateRanking() -> int:
+def calculateRanking(measurements) -> str:
+
+    
     return

@@ -7,7 +7,7 @@ class BinForm(forms.ModelForm):
     
     class Meta: # Metadaten
         model = Bin 
-        fields = "__all__"
+        exclude = ["color"] # Exclude color from form, as it is set automatically
 
 
 # Not a ModelForm due to different data type between input and database
