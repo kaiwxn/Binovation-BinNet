@@ -1,4 +1,4 @@
 
 # This is BinNet!
 
-> Websi
+> Website for our MyScience Project "Binovation"
