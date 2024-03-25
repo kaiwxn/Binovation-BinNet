@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from .models import Bin, Measurement
+from .models import Bin, Measurement, Ranking
 from .forms import BinForm, MeasurementForm
 from .calculate import calculateRanking
 
@@ -51,6 +51,10 @@ def index(request):
 
                 # Save data to table
                 formBin.save()
+
+                # Create Ranking objects for each weekday
+                Ranking.objects.bulk_create([Ranking(bin = Bin.objects.last(), weekday = i) for i in range(1, 8)])
+                
                 return redirect("index")
         else:
             formBin = BinForm()
@@ -71,7 +75,7 @@ def index(request):
                 Measurement.objects.bulk_create(measurements)
                 
                 # Alter bin color based on calculation
-                Bin.objects.get(id = binId).color = calculateRanking(measurements)
+                # Bin.objects.get(id = binId).color = calculateRanking(measurements)
 
                 return redirect("index")
         else:
@@ -79,7 +83,7 @@ def index(request):
 
 
     # Change Form object to list for displaying markers on map
-    data = [[m.id, m.latitude, m.longitude, m.color] for m in Bin.objects.all()] 
+    data = [[m.id, m.latitude, m.longitude] for m in Bin.objects.all()] 
 
     context = {
         "title": "Binnet - Home",

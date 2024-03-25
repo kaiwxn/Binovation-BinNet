@@ -5,19 +5,12 @@ import datetime
 
 # Create your models here.
 class Bin(models.Model):
-
-    # Enumeration for color of bin
-    class Color(models.TextChoices):
-        RED = "R", "Red"
-        ORANGE = "O", "Orange"
-        GREEN = "G", "Green"
     
     # Fields of database table
     id = models.AutoField(primary_key = True)
     hasSensor = models.BooleanField(default = False)
     latitude = models.FloatField(default = 0.0, blank = False)
     longitude = models.FloatField(default = 0.0, blank = False)
-    color = models.CharField(max_length = 7, choices = Color, default = Color.GREEN)
     
     def __str__(self):
         return f"Mülleimer: {self.id}"
@@ -36,3 +29,22 @@ class Measurement(models.Model):
 
     def __str__(self):
         return f"Messung: {self.id}"
+    
+
+class Ranking(models.Model):
+
+    # Enumeration for color of bin
+    class Color(models.TextChoices):
+        RED = "R", "Red"
+        ORANGE = "O", "Orange"
+        GREEN = "G", "Green"
+
+    id = models.AutoField(primary_key = True)
+    bin = models.ForeignKey(Bin, on_delete = models.CASCADE)
+
+    # 1: Monday, 2: Tuesday, ..., 7: Sunday
+    weekday = models.IntegerField(default = 0)
+    color = models.CharField(max_length = 7, choices = Color, default = Color.GREEN)
+
+    def __str__(self):
+        return f"Ranking: {self.id}"
