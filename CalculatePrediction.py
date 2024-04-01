@@ -1,60 +1,73 @@
 
-def getBounds(val) -> tuple[int, int]:
+def calculateIncreasing(measurements):
 
-    # minDist: Lowest measurement value -> highest point in garbage bin
-    # maxDist: Highest measurement value -> lowest point in garbage bin
-    minDist = 1e5
-    maxDist = -1
-
-    for num in val:
-        minDist = min(num, minDist)
-        maxDist = max(num, maxDist)
-
-    return minDist, maxDist
     
+    increasingSublists = [[measurements[0]]]
 
-def calculateFillRate(val) -> float:
+    for i in range(1, len(measurements)):
+
+        isIncreasing = measurements[i-1] < measurements[i]
+        isDiff = abs(measurements[i-1] - measurements[i]) < 10
+
+        if isIncreasing or isDiff:
+            increasingSublists[-1].append(measurements[i])
+        else:
+            increasingSublists.append([measurements[i]])
+
+    # Go through each part and calculate fillrate
+    fillrate = []
+    for part in increasingSublists:
+        fillrate.append(calculateFillrate(part))
+
+    return increasingSublists, fillrate
+
+
+def calculateFillrate(measurements) -> float:
+
+    # Calculates fillrate of a single list
+    maxMeasurement = measurements[-1]
+    minMeasurement = measurements[0]
+
+    return (maxMeasurement - minMeasurement) / 1
+
+def filterWeekDay(measurements) -> list[float]:
+    # Split measurements into weekdays
+    ans = {
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: [],
+        6: [],
+        7: []
+    }
+
+    for measurement in measurements:
+        ans[measurement[1]].append(measurement[0])
     
-    # Calculate fill rate
-    minDist, maxDist = getBounds(val)
-    fillRate = (maxDist - minDist) / maxDist
-
-    return round(fillRate, 2)
-
-
-def solveIncreasingValues() -> list[list[int]]:
-
-    # input: 
-    values = [5, 12, 5, 58, 59, 57, 12, 34, 67]
-    weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    
-    solution = []
-    temp = []
-
-    minDist, maxDist = getBounds(values)
-    
-    
-    # Search for increasing values
-    oldVal = values[0]
-    for num in values:
-
-        # If increasing or close to previous value
-        if num > oldVal or abs(num - oldVal) < 5:
-            temp.append(num)
-        elif num < oldVal:
-            solution.append((temp, calculateFillRate(temp)))
-            temp = [num]
-        oldVal = num
-
-    solution.append((temp, calculateFillRate(temp)))
-
-    return solution
-
-
+    return ans
 
 def main():
-    args = solveIncreasingValues()
+    example = [(5, 1), (24, 1), (1, 1), (12, 1), (5, 2), (58, 2), (59, 2), (57, 3), (12, 4), (34, 4), (67, 4)]
+
+    args = filterWeekDay(example)
+
+    # Calculate increasing parts of the measurements
+    # Format: {1: [[5, 24], [1, 12]], 2: [[5, 58, 59]], 3: [[57]], 4: [[12, 34, 67]], 5: [], 6: [], 7: []}
+    for key, value in args.items():
+        if len(value) > 0:
+            args[key], fillrate = calculateIncreasing(value)
+            avgFillrate = sum(fillrate) / len(fillrate)
+
+            args[key] = avgFillrate
+            
+            # NOW: DETERMINE RANKING
+
+
     print(args)
+    print("\n")
+    
+
 
 if __name__ == "__main__":
     main()

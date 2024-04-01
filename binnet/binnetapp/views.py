@@ -2,7 +2,8 @@ from django.shortcuts import redirect, render
 
 from .models import Bin, Measurement, Ranking
 from .forms import BinForm, MeasurementForm
-from .calculate import calculateRanking
+
+from .calculate import *
 
 import datetime
 
@@ -44,7 +45,7 @@ def index(request):
     if request.method == "POST":
 
         # Check which form was submitted
-        # Bin form
+        # 1. Bin form
         if "bin_submit" in request.POST:
             formBin = BinForm(request.POST)
             if formBin.is_valid():
@@ -52,14 +53,14 @@ def index(request):
                 # Save data to table
                 formBin.save()
 
-                # Create Ranking objects for each weekday
+                # Automatically create Ranking objects of new Bin for each weekday
                 Ranking.objects.bulk_create([Ranking(bin = Bin.objects.last(), weekday = i) for i in range(1, 8)])
                 
                 return redirect("index")
         else:
             formBin = BinForm()
         
-        # Measurement form
+        # 2. Measurement form
         if "measurement_submit" in request.POST:
             formMeasurement = MeasurementForm(request.POST)
             if formMeasurement.is_valid():
@@ -75,7 +76,11 @@ def index(request):
                 Measurement.objects.bulk_create(measurements)
                 
                 # Alter bin color based on calculation
-                # Bin.objects.get(id = binId).color = calculateRanking(measurements)
+                # Format: []
+
+                for ranking in Ranking.objects.get(bin = binId):
+                    
+                    ranking.color = calculate.calculateRanking(measurements)
 
                 return redirect("index")
         else:
@@ -92,6 +97,7 @@ def index(request):
         "data": data,
     }
     return render(request, "binnetapp\index.html", context)
+
 
 
 def detail(request):
