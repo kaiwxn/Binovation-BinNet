@@ -66,7 +66,7 @@ for (var i = 0; i < data.length; i++) {
             icon = greenIcon;
             break;
     }
-    
+
     L.marker([latitude, longitude], { icon: icon }).addTo(map)
         .bindPopup("Mülleimer " + id + " " + "lat: " + latitude + " lon: " + longitude + " color: " + color);
 }

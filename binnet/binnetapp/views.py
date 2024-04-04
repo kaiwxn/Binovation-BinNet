@@ -35,7 +35,50 @@ def processDateTime(values, binId, date, time) -> list[Measurement]:
     # Return list of measurement objects
     return measurements
 
+def binFormHandler(request):
+    if "bin_submit" in request.POST:
+        formBin = BinForm(request.POST)
+        if formBin.is_valid():
 
+            # Save data to table
+            formBin.save()
+
+            # Automatically create Ranking objects of new Bin for each weekday
+            Ranking.objects.bulk_create([Ranking(bin = Bin.objects.last(), weekday = i) for i in range(1, 8)])
+
+            return redirect("index")
+    else:
+        formBin = BinForm()
+
+def measurementFormHandler(request):
+    if "measurement_submit" in request.POST:
+        formMeasurement = MeasurementForm(request.POST)
+        if formMeasurement.is_valid():
+
+            # Process data 
+            values = formMeasurement.data["values"].split(" ")
+            binId = formMeasurement.data["bin"]
+            date = formMeasurement.data["startingDate"]
+            time = formMeasurement.data["startingTime"]
+            
+            # Create multiple entries of Measurement
+            measurements = processDateTime(values, binId, date, time)
+            Measurement.objects.bulk_create(measurements)
+            
+            # Alter bin color based on calculation
+            rankingData = calculateRanking(measurements)
+
+            for key, value in rankingData.items():
+                if len(value) != 0:
+                    ranking = Ranking.objects.get(bin = binId, weekday = key)
+                    ranking.color = value[1]
+                    ranking.fillrate = value[0]
+                    ranking.save()
+
+            return redirect("index")
+    else:
+        formMeasurement = MeasurementForm()
+    
 # Views for the application
 def index(request):
     formBin = BinForm()
@@ -46,55 +89,20 @@ def index(request):
 
         # Check which form was submitted
         # 1. Bin form
-        if "bin_submit" in request.POST:
-            formBin = BinForm(request.POST)
-            if formBin.is_valid():
-
-                # Save data to table
-                formBin.save()
-
-                # Automatically create Ranking objects of new Bin for each weekday
-                Ranking.objects.bulk_create([Ranking(bin = Bin.objects.last(), weekday = i) for i in range(1, 8)])
-                
-                return redirect("index")
-        else:
-            formBin = BinForm()
+        binFormHandler(request)
         
         # 2. Measurement form
-        if "measurement_submit" in request.POST:
-            formMeasurement = MeasurementForm(request.POST)
-            if formMeasurement.is_valid():
-
-                # Process data 
-                values = formMeasurement.data["values"].split(" ")
-                binId = formMeasurement.data["bin"]
-                date = formMeasurement.data["startingDate"]
-                time = formMeasurement.data["startingTime"]
-                
-                # Create multiple entries of Measurement
-                measurements = processDateTime(values, binId, date, time)
-                Measurement.objects.bulk_create(measurements)
-                
-                # Alter bin color based on calculation
-                # Format: []
-
-                for ranking in Ranking.objects.get(bin = binId):
-                    
-                    ranking.color = calculate.calculateRanking(measurements)
-
-                return redirect("index")
-        else:
-            formMeasurement = MeasurementForm()
+        measurementFormHandler(request)
 
 
     # Change Form object to list for displaying markers on map
-    data = [[m.id, m.latitude, m.longitude] for m in Bin.objects.all()] 
+    binData = [[m.id, m.latitude, m.longitude, Ranking.objects.get(bin = m.id, weekday = datetime.datetime.now().weekday()).color] for m in Bin.objects.all()] 
 
     context = {
         "title": "Binnet - Home",
         "formBin": formBin,
         "formMeasurement": formMeasurement,
-        "data": data,
+        "data": binData,
     }
     return render(request, "binnetapp\index.html", context)
 

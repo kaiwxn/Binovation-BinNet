@@ -45,6 +45,7 @@ class Ranking(models.Model):
     # 1: Monday, 2: Tuesday, ..., 7: Sunday
     weekday = models.IntegerField(default = 0)
     color = models.CharField(max_length = 7, choices = Color, default = Color.GREEN)
-
+    fillrate = models.FloatField(default = 0.0)
+    
     def __str__(self):
         return f"Ranking: {self.id}"

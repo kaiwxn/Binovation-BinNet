@@ -57,13 +57,28 @@ def main():
     for key, value in args.items():
         if len(value) > 0:
             args[key], fillrate = calculateIncreasing(value)
-            avgFillrate = sum(fillrate) / len(fillrate)
 
-            args[key] = avgFillrate
+            # Calculate average fillrate of every fillrate
+            # len() SHOULD BE difference of time 
+            avgFillrate = sum(fillrate) / len(fillrate)
             
             # NOW: DETERMINE RANKING
+            RED_THRESHOLD = 15
+            ORANGE_THRESHOLD = 10
+            GREEN_THRESHOLD = 5
 
-
+            if avgFillrate >= RED_THRESHOLD:
+                args[key] = (avgFillrate, "Ranking.Color.RED")
+            
+            elif avgFillrate >= ORANGE_THRESHOLD:
+                args[key] = (avgFillrate, "Ranking.Color.ORANGE")
+            
+            elif avgFillrate >= GREEN_THRESHOLD:
+                args[key] = (avgFillrate, "Ranking.Color.GREEN")
+            
+            else:
+                args[key] = (avgFillrate, "Ranking.Color.GREEN")
+    
     print(args)
     print("\n")
     
