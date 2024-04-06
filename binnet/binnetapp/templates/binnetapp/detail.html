@@ -8,9 +8,31 @@
     <p>Hier sind alle Daten der Mülleimer eingetragen:</p>
 
     <hr>
+    <table>
+        <tr>
+          <th>Id</th>
+          <th>Montag</th>
+          <th>Dienstag</th>
+          <th>Mittwoch</th>
+          <th>Donnerstag</th>
+          <th>Freitag</th>
+          <th>Samstag</th>
+          <th>Sonntag</th>
+        </tr>
+        {% for id, color in rankings.items %}
+            <tr>
+                <td>{{id}}</td>
+                {% for colorDay in color %}
+                    <td>{{colorDay}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+      </table>
+
+    <hr>
 
     {% for bin in bins %}
-        <p>Bin: {{bin.id}} | hatSensor: {{bin.hasSensor}} | Standort: {{bin.latitude}}; {{bin.longitude}} | Farbe: {{bin.color}}</p>
+        <p>Bin: {{bin.id}} | Sensor: {{bin.hasSensor}} | Standort: ({{bin.latitude}}; {{bin.longitude}})</p>
     {% endfor %}
 
 </div>

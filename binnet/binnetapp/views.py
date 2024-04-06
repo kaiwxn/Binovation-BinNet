@@ -7,6 +7,7 @@ from .calculate import *
 
 import datetime
 
+
 def processDateTime(values, binId, date, time) -> list[Measurement]:
     measurements = []
 
@@ -112,8 +113,13 @@ def detail(request):
     # Render all information about the bins 
 
     bins = Bin.objects.all()
+
+    # Format values of rankings for table: E.g. {1: [RED, ORANGE, GREEN, ...], 2: [GREEN, RED, ...}
+    rankings = {ranking.bin: [r.color for r in Ranking.objects.filter(bin = ranking.bin)] for ranking in Ranking.objects.all()}
+    
     context = {
         "title": "Binnet - Detail",
         "bins": bins,
+        "rankings": rankings,
     }
     return render(request, "binnetapp\detail.html", context)

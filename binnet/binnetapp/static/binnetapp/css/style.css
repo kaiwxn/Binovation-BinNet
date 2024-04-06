@@ -62,3 +62,14 @@ body {
 .display-div {
     margin: 1% 30% auto 1%;
 }
+
+table {
+    text-align: left;
+}
+
+th {
+    min-width: 100px;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid black;
+}
