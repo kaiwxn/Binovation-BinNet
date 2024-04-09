@@ -9,6 +9,8 @@ import datetime
 
 
 def processDateTime(values, binId, date, time) -> list[Measurement]:
+    # Creates Measurement objects based on the input data from MeasurementForm
+
     measurements = []
 
     # Convert date and time to datetime objects for easier handling
@@ -37,6 +39,7 @@ def processDateTime(values, binId, date, time) -> list[Measurement]:
     return measurements
 
 def binFormHandler(request):
+    # Handle form data for BinForm
     if "bin_submit" in request.POST:
         formBin = BinForm(request.POST)
         if formBin.is_valid():
@@ -52,6 +55,7 @@ def binFormHandler(request):
         formBin = BinForm()
 
 def measurementFormHandler(request):
+    # Handle form data for MeasurementForm
     if "measurement_submit" in request.POST:
         formMeasurement = MeasurementForm(request.POST)
         if formMeasurement.is_valid():
@@ -68,7 +72,8 @@ def measurementFormHandler(request):
             
             # Alter bin color based on calculation
             rankingData = calculateRanking(measurements)
-
+            
+            # Update Ranking objects with new data
             for key, value in rankingData.items():
                 if len(value) != 0:
                     ranking = Ranking.objects.get(bin = binId, weekday = key)

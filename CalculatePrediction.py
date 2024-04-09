@@ -1,46 +1,31 @@
 
-def calculateIncreasing(measurements):
+def splitDecreasing(measurements) -> list[list[float]]:
 
+    # Splits decreasing parts of the measurements
+    # E.g. Output: [[24, 12, 4, 1], [56, 47, 43, 4], [4]]
+    decreasingSublists = [[measurements[0]]]
     
-    increasingSublists = [[measurements[0]]]
-
     for i in range(1, len(measurements)):
 
-        isIncreasing = measurements[i-1] < measurements[i]
+        # If value is decreasing or difference is less than 10cm
+        isDecreasing = measurements[i-1] > measurements[i]
         isDiff = abs(measurements[i-1] - measurements[i]) < 10
 
-        if isIncreasing or isDiff:
-            increasingSublists[-1].append(measurements[i])
+        if isDecreasing or isDiff:
+            decreasingSublists[-1].append(measurements[i])
         else:
-            increasingSublists.append([measurements[i]])
+            decreasingSublists.append([measurements[i]])
+    
+    # Go through each part and calculate sum of differences
+    sumDiff = 0
+    for part in decreasingSublists:
+        sumDiff += part[0] - part[-1]
 
-    # Go through each part and calculate fillrate
-    fillrate = []
-    for part in increasingSublists:
-        fillrate.append(calculateFillrate(part))
-
-    return increasingSublists, fillrate
-
-
-def calculateFillrate(measurements) -> float:
-
-    # Calculates fillrate of a single list
-    maxMeasurement = measurements[-1]
-    minMeasurement = measurements[0]
-
-    return (maxMeasurement - minMeasurement) / 1
+    return decreasingSublists, sumDiff, len(decreasingSublists)
 
 def filterWeekDay(measurements) -> list[float]:
     # Split measurements into weekdays
-    ans = {
-        1: [],
-        2: [],
-        3: [],
-        4: [],
-        5: [],
-        6: [],
-        7: []
-    }
+    ans = {i: [] for i in range(1, 8)}
 
     for measurement in measurements:
         ans[measurement[1]].append(measurement[0])
@@ -48,38 +33,33 @@ def filterWeekDay(measurements) -> list[float]:
     return ans
 
 def main():
-    example = [(5, 1), (24, 1), (1, 1), (12, 1), (5, 2), (58, 2), (59, 2), (57, 3), (12, 4), (34, 4), (67, 4)]
+    example = [(24, 1), (12, 1), (0, 1), (24, 1), (12, 1), (0, 1), (60, 2), (40, 2), (20, 2), (0, 2)]
 
     args = filterWeekDay(example)
-
-    # Calculate increasing parts of the measurements
-    # Format: {1: [[5, 24], [1, 12]], 2: [[5, 58, 59]], 3: [[57]], 4: [[12, 34, 67]], 5: [], 6: [], 7: []}
-    for key, value in args.items():
-        if len(value) > 0:
-            args[key], fillrate = calculateIncreasing(value)
-
-            # Calculate average fillrate of every fillrate
-            # len() SHOULD BE difference of time 
-            avgFillrate = sum(fillrate) / len(fillrate)
-            
-            # NOW: DETERMINE RANKING
-            RED_THRESHOLD = 15
-            ORANGE_THRESHOLD = 10
-            GREEN_THRESHOLD = 5
-
-            if avgFillrate >= RED_THRESHOLD:
-                args[key] = (avgFillrate, "Ranking.Color.RED")
-            
-            elif avgFillrate >= ORANGE_THRESHOLD:
-                args[key] = (avgFillrate, "Ranking.Color.ORANGE")
-            
-            elif avgFillrate >= GREEN_THRESHOLD:
-                args[key] = (avgFillrate, "Ranking.Color.GREEN")
-            
-            else:
-                args[key] = (avgFillrate, "Ranking.Color.GREEN")
-    
     print(args)
+    # Calculate increasing parts of the measurements
+    # Format: dict[int, list]
+    for key, value in args.items():
+        
+        if value != []:
+            # [DecreasingSublists, sumDiff]
+            countMeasurements = len(value)
+
+            args[key], sumDiff, countSublists = splitDecreasing(value)
+
+
+            # Number of Differences in one day = Number of measurements - Number of sublists
+            # Because each sublist has len(sublist) - 1 differences
+            countDelta = countMeasurements - countSublists
+
+            # Calculate average fillrate of one weekday
+            fillrate = round(sumDiff / countDelta, 3)
+
+            # args[key] = fillrate
+            print(f"{fillrate=}, {countDelta=}, {sumDiff=}, {len(example)=}, {len(value)=}")
+
+    print(args)
+    
     print("\n")
     
 

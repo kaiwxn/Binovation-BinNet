@@ -1,7 +1,6 @@
 from .models import Ranking 
-from datetime import timedelta
 
-def splitWeekDay(measurements) -> list[float]:
+def splitWeekDay(measurements: list[float]) -> dict[int, list]:
     # Splits measurements into weekdays
     ans = {i: [] for i in range(1, 8)}
 
@@ -11,68 +10,54 @@ def splitWeekDay(measurements) -> list[float]:
     return ans
 
 
-def calculateFillrate(measurements) -> float:
-    # Calculates fillrate of a single list
-    # Returns fillrate as cm/hour
-    
-    # Difference of max and min value
-    maxMeasurement = measurements[-1]
-    minMeasurement = measurements[0]
-    valueDelta = abs(maxMeasurement.value - minMeasurement.value)
 
-    # Difference of hours
-    dayDelta = maxMeasurement.measureDate.day - minMeasurement.measureDate.day
-    hourDelta = maxMeasurement.measureTime.hour - minMeasurement.measureTime.hour
-    totalDelta = timedelta(days=dayDelta, hours=hourDelta).total_seconds() // 3600
+def splitDecreasing(measurements: list[float]) -> list[list[float]]:
 
-    # DEBUGGING
-    # print([m.value for m in measurements])
-    # print(valueDelta, hourDelta)
-    return (valueDelta) / (totalDelta)
+    # Splits decreasing parts of the measurements
+    # E.g. Output: [[24, 12, 4, 1], [56, 47, 43, 4], [4]]
 
-
-def calculateIncreasing(measurements) -> list[list[float]]:
-
-    # Splits increasing parts of the measurements
-    # E.g. Output: [[5, 12], [5, 58, 59], [57], [12, 34, 67]]
-
-    increasingSublists = [[measurements[0]]]
+    decreasingSublists = [[measurements[0]]]
 
     for i in range(1, len(measurements)):
 
-        isIncreasing = measurements[i-1].value < measurements[i].value
+        # If value is decreasing or difference is less than 10cm
+        isDecreasing = measurements[i-1].value > measurements[i].value
         isDiff = abs(measurements[i-1].value - measurements[i].value) < 10
 
-        if isIncreasing or isDiff:
-            increasingSublists[-1].append(measurements[i])
+        if isDecreasing or isDiff:
+            decreasingSublists[-1].append(measurements[i])
         else:
-            increasingSublists.append([measurements[i]])
+            decreasingSublists.append([measurements[i]])
     
-    # Go through each part and calculate fillrate
-    fillrate = []
-    for part in increasingSublists:
-        if len(part) > 1:
-            fillrate.append(calculateFillrate(part))
-        else:
-            fillrate.append(0.0)
+    # Go through each part and calculate sum of differences
+    sumDiff = 0.0
+    for part in decreasingSublists:
+        sumDiff += part[0] - part[-1]
 
-    return increasingSublists, fillrate
+    return decreasingSublists, sumDiff, len(decreasingSublists)
 
 
-def calculateRanking(measurements) -> dict[int, Ranking.Color]:
-    # Input: List of measurements
+def calculateRanking(measurements: list[float]) -> dict[int, Ranking.Color]:
+    # Input: List of measurements for each weekdaz
     # Output: Color of the ranking for each weekday
 
     # Split measurements into weekdays
     measurements = splitWeekDay(measurements)
 
-    for key, value in measurements.items():
-        if len(value) != 0:
-            
-            measurements[key], fillrate = calculateIncreasing(value)
-            
-            # Calculate average fillrate of every fillrate
-            avgFillrate = round(sum(fillrate) / len(fillrate), 3)
+    for day, values in measurements.items():
+
+        if values != []:
+            countMeasurements = len(values)
+
+            # [DecreasingSublists, sumDiff]
+            measurements[day], sumDiff, countSublists = splitDecreasing(values)
+
+            # Number of Differences in one day = Number of measurements - Number of sublists
+            # Because each sublist has len(sublist) - 1 differences
+            countDelta = countMeasurements - countSublists
+
+            # Calculate average fillrate of one weekday
+            fillrate = round(sumDiff / countDelta, 3)
             
             # DETERMINE RANKING (In cm/hour)
             # Thresholds for ranking are based on experimental results
@@ -80,16 +65,16 @@ def calculateRanking(measurements) -> dict[int, Ranking.Color]:
             ORANGE_THRESHOLD = 15
             GREEN_THRESHOLD = 5
 
-            if avgFillrate >= RED_THRESHOLD:
-                measurements[key] = (avgFillrate, Ranking.Color.RED)
+            if fillrate >= RED_THRESHOLD:
+                measurements[day] = (fillrate, Ranking.Color.RED)
             
-            elif avgFillrate >= ORANGE_THRESHOLD:
-                measurements[key] = (avgFillrate, Ranking.Color.ORANGE)
+            elif fillrate >= ORANGE_THRESHOLD:
+                measurements[day] = (fillrate, Ranking.Color.ORANGE)
             
-            elif avgFillrate >= GREEN_THRESHOLD:
-                measurements[key] = (avgFillrate, Ranking.Color.GREEN)
+            elif fillrate >= GREEN_THRESHOLD:
+                measurements[day] = (fillrate, Ranking.Color.GREEN)
             
             else:
-                measurements[key] = (avgFillrate, Ranking.Color.GREEN)
+                measurements[day] = (fillrate, Ranking.Color.GREEN)
             
     return measurements
