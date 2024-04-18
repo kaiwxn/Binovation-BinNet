@@ -1,6 +1,6 @@
-from .models import Ranking 
+from .models import Ranking, Measurement
 
-def splitWeekDay(measurements: list[float]) -> dict[int, list]:
+def splitWeekDay(measurements: list[Measurement]) -> dict[int, list[Measurement]]:
     # Splits measurements into weekdays
     ans = {i: [] for i in range(1, 8)}
 
@@ -37,7 +37,7 @@ def splitDecreasing(measurements: list[float]) -> list[list[float]]:
     return decreasingSublists, sumDiff, len(decreasingSublists)
 
 
-def calculateRanking(measurements: list[float]) -> dict[int, Ranking.Color]:
+def calculateRanking(measurements: list[Measurement]) -> dict[int, Ranking.Color]:
     # Input: List of measurements for each weekdaz
     # Output: Color of the ranking for each weekday
 
