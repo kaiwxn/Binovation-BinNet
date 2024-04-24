@@ -5,7 +5,7 @@ def splitWeekDay(measurements: list[Measurement]) -> dict[int, list[Measurement]
     ans = {i: [] for i in range(1, 8)}
 
     for measurement in measurements:
-        ans[measurement.measureDate.weekday()].append(measurement)
+        ans[measurement.measureDate.weekday() + 1].append(measurement)
     
     return ans
 
@@ -32,7 +32,7 @@ def splitDecreasing(measurements: list[float]) -> list[list[float]]:
     # Go through each part and calculate sum of differences
     sumDiff = 0.0
     for part in decreasingSublists:
-        sumDiff += part[0] - part[-1]
+        sumDiff += part[0].value - part[-1].value
 
     return decreasingSublists, sumDiff, len(decreasingSublists)
 
@@ -61,9 +61,9 @@ def calculateRanking(measurements: list[Measurement]) -> dict[int, Ranking.Color
             
             # DETERMINE RANKING (In cm/hour)
             # Thresholds for ranking are based on experimental results
-            RED_THRESHOLD = 20
-            ORANGE_THRESHOLD = 15
-            GREEN_THRESHOLD = 5
+            RED_THRESHOLD = 5
+            ORANGE_THRESHOLD = 1.5
+            GREEN_THRESHOLD = 0.5
 
             if fillrate >= RED_THRESHOLD:
                 measurements[day] = (fillrate, Ranking.Color.RED)

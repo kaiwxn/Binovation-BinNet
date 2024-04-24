@@ -19,11 +19,19 @@
           <th>Samstag</th>
           <th>Sonntag</th>
         </tr>
-        {% for id, color in rankings.items %}
+        {% for id, day in rankings.items %}
             <tr>
                 <td>{{id}}</td>
-                {% for colorDay in color %}
-                    <td>{{colorDay}}</td>
+                {% for colorDay, fillrate in day %}
+                    <td>
+                        <p class="p_table">
+                            {{colorDay}} 
+                            {% if fillrate != 0 %}
+                            | {{fillrate}}cm/h
+                            {% endif %}
+                        </p>
+                        
+                    </td>
                 {% endfor %}
             </tr>
         {% endfor %}

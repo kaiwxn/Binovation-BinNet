@@ -120,7 +120,7 @@ def detail(request):
     bins = Bin.objects.all()
 
     # Format values of rankings for table: E.g. {1: [RED, ORANGE, GREEN, ...], 2: [GREEN, RED, ...}
-    rankings = {ranking.bin: [r.color for r in Ranking.objects.filter(bin = ranking.bin)] for ranking in Ranking.objects.all()}
+    rankings = {ranking.bin: [(r.color, r.fillrate) for r in Ranking.objects.filter(bin = ranking.bin)] for ranking in Ranking.objects.all()}
     
     context = {
         "title": "Binnet - Detail",
