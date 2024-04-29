@@ -8,8 +8,8 @@
     <p>Hier sind alle Daten der Mülleimer eingetragen:</p>
 
     <hr>
-    <table>
-        <tr>
+    <table id="myTable">
+        <tr class="row">
           <th>Id</th>
           <th>Montag</th>
           <th>Dienstag</th>
@@ -18,12 +18,12 @@
           <th>Freitag</th>
           <th>Samstag</th>
           <th>Sonntag</th>
-        </tr>
+        </tr class="row">
         {% for id, day in rankings.items %}
-            <tr>
+            <tr class="row">
                 <td>{{id}}</td>
                 {% for colorDay, fillrate in day %}
-                    <td>
+                    <td class="rankingfield">
                         <p class="p_table">
                             {{colorDay}} 
                             {% if fillrate != 0 %}
@@ -44,5 +44,29 @@
     {% endfor %}
 
 </div>
+<script>
+    // Select all elements
+    const rows = document.querySelectorAll(".row");
 
+    for(let i = 1; i < rows.length; i++){
+
+
+        for(let j = 1; j < rows[i].children.length; j++){
+            let ranking = rows[i].children[j].textContent.trim();
+            let tdobj = rows[i].children[j];
+            if(ranking.startsWith("G")){ 
+                tdobj.classList.add("green");
+            } 
+            else if(ranking.startsWith("O")){ 
+                tdobj.classList.add("orange"); 
+            }
+            else if(ranking.startsWith("R")){ 
+                tdobj.classList.add("red");
+            } 
+            else {
+                tdobj.classList.add("default");
+            }
+        }
+    }
+</script>
 {% endblock %}

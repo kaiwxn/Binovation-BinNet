@@ -54,6 +54,7 @@ for (var i = 0; i < data.length; i++) {
     latitude = data[i][1];
     longitude = data[i][2];
     color = data[i][3];
+    fillrate = data[i][4];
 
     switch (color) {
         case 'O':
@@ -68,5 +69,16 @@ for (var i = 0; i < data.length; i++) {
     }
 
     L.marker([latitude, longitude], { icon: icon }).addTo(map)
-        .bindPopup("Mülleimer " + id + " " + "lat: " + latitude + " lon: " + longitude + " color: " + color);
+        .bindPopup(
+            "Mülleimer "
+            + id
+            + " | Koordinaten: "
+            + latitude
+            + ", "
+            + longitude
+            + " | Ranking: "
+            + color
+            + " | Füllrate: "
+            + fillrate
+            + "cm/h");
 }

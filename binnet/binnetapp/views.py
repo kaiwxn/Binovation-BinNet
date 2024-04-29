@@ -100,9 +100,13 @@ def index(request):
         # 2. Measurement form
         measurementFormHandler(request)
 
-
     # Change Form object to list for displaying markers on map
-    binData = [[m.id, m.latitude, m.longitude, Ranking.objects.get(bin = m.id, weekday = datetime.datetime.now().weekday()).color] for m in Bin.objects.all()] 
+    binData = [[m.id, 
+                m.latitude, 
+                m.longitude, 
+                Ranking.objects.get(bin = m.id, weekday = datetime.datetime.now().weekday() + 1).color,
+                Ranking.objects.get(bin = m.id, weekday = datetime.datetime.now().weekday() + 1).fillrate] 
+                for m in Bin.objects.all()] 
 
     context = {
         "title": "Binnet - Home",

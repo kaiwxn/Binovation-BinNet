@@ -3,14 +3,13 @@
 
 {% block content %}
 <div class="index-div">
-    <h1>Karte</h1>
+    <h1 id="index-h1">Karte</h1>
     
     <p class="form-description"> Hier können Sie die Daten für die Mülleimer eintragen.</p>
     <div class="container">
         <div class="forms">
-            <hr>
-            <div class="form-div">
-                <p>Mülleimer:</p>
+            <div id="formBin" class="form-div">
+                <p class="form-head">Mülleimer:</p>
                 <form action="" method="POST">
                     {% csrf_token %}
                     {{ formBin }}
@@ -20,8 +19,8 @@
         
             <br>
         
-            <div class="form-div">
-                <p>Messung:</p>
+            <div id="formMeasurement" class="form-div">
+                <p class="form-head">Messung:</p>
                 <form action="" method="POST">
                     {% csrf_token %}
                     {{ formMeasurement }}

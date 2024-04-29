@@ -4,6 +4,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
     background-color: rgb(212, 243, 245);
+    align-content: center;
 }
 
 /* navbar css */
@@ -15,6 +16,7 @@ body {
     user-select: none;
     box-shadow: 0px 0px 5px 0px black;
 }
+
 
 .navbar-title {
     padding: 10px 10px;
@@ -41,8 +43,13 @@ body {
 }
 
 /* index css */
+#index-h1,
+.form-description {
+    margin-left: 10px;
+}
+
 .index-div {
-    margin: 1%;
+    margin: 1% 10%;
 }
 
 .container {
@@ -53,8 +60,31 @@ body {
     display: block;
 }
 
+.form-div {
+    margin: 10px;
+    padding: 3px 10px 10px 10px;
+    background-color: rgb(158, 151, 151);
+
+}
+
+.form-head {
+    font-weight: bold;
+}
+
+#formBin,
+#formMeasurement {
+    background-color: rgba(128, 128, 128, 0.308);
+}
+
+#formBin:hover,
+#formMeasurement:hover {
+    box-shadow: 0px 0px 5px 0px black;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
 #map {
-    margin: 10px auto 10px 50px;
+    margin: 10px auto 10px 10px;
     width: 1000px;
     height: 600px;
     box-shadow: 0px 0px 5px 0px black;
@@ -63,7 +93,7 @@ body {
 /* display css */
 
 .display-div {
-    margin: 1% 30% auto 1%;
+    margin: 1% 10%;
 }
 
 table {
@@ -78,6 +108,24 @@ th {
     border-left: 0px;
     border-right: 0px;
     border-bottom: 1px solid black;
+}
+
+td {}
+
+.green {
+    background-color: lightgreen !important;
+}
+
+.orange {
+    background-color: orange !important;
+}
+
+.red {
+    background-color: red !important;
+}
+
+.default {
+    background-color: rgba(158, 151, 151, 0.26);
 }
 
 .p_table {
