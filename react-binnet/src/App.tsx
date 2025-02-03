@@ -22,8 +22,9 @@ function App() {
     }, [])
 
     return (
-      <div style={{ textAlign: 'left' }}>
+      <div>
       {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
+      <h1 className="text-3xl font-bold underline"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, veniam?</h1>
       </div>
     );
 }
