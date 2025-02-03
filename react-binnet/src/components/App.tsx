@@ -3,13 +3,7 @@ import './App.css'
 import axios from 'axios';
 
 function App() {
-    const [data, setData] = useState<Apple[]>([])
-
-    interface Apple {
-        name: string;
-        color: string;
-        photo_url: string;
-    }
+    const [data, setData] = useState(0)
 
     useEffect(() => {
         axios.get('http://localhost:8000/binnetapp/')
@@ -25,6 +19,7 @@ function App() {
       <div>
       {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
       <h1 className="text-3xl font-bold underline"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, veniam?</h1>
+      <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Button</button>
       </div>
     );
 }
