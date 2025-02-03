@@ -19,7 +19,8 @@ function App() {
       <div>
       {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
       <h1 className="text-3xl font-bold underline"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, veniam?</h1>
-      <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Button</button>
+      <button>Button</button>
+      <input type="checkbox" aria-label="Checkbox" className="btn" />
       </div>
     );
 }
