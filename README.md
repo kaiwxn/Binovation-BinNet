@@ -1,9 +1,7 @@
 
 # This is BinNet!
 
-> Website for our MyScience Project "Binovation"
-
-Install [NodeJs](https://nodejs.org/en/download/)
+> Webapp for our MyScience Project "Binovation"
 
 
 ## Setup
