@@ -1,1 +1,8 @@
 __pycache__/
+
+/migrations/
+
+.venv/
+venv/
+ENV/
+env/

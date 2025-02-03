@@ -38,6 +38,7 @@ def processDateTime(values, binId, date, time) -> list[Measurement]:
     # Return list of measurement objects
     return measurements
 
+
 def binFormHandler(request):
     # Handle form data for BinForm
     if "bin_submit" in request.POST:
@@ -53,6 +54,7 @@ def binFormHandler(request):
             return redirect("index")
     else:
         formBin = BinForm()
+
 
 def measurementFormHandler(request):
     # Handle form data for MeasurementForm
@@ -85,6 +87,7 @@ def measurementFormHandler(request):
     else:
         formMeasurement = MeasurementForm()
     
+
 # Views for the application
 def index(request):
     formBin = BinForm()
@@ -92,13 +95,13 @@ def index(request):
 
     # Form for Bins
     if request.method == "POST":
-
         # Check which form was submitted
         # 1. Bin form
         binFormHandler(request)
         
         # 2. Measurement form
         measurementFormHandler(request)
+
 
     # Change Form object to list for displaying markers on map
     binData = [[m.id, 

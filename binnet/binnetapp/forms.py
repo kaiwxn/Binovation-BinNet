@@ -5,7 +5,7 @@ from .models import Bin
 # ModelForm for Bin
 class BinForm(forms.ModelForm):
     
-    class Meta: # Metadaten
+    class Meta: # Metadata
         model = Bin 
         exclude = ["color"] # Exclude color from form, as it is set automatically
 
