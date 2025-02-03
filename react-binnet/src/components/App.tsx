@@ -18,8 +18,8 @@ function App() {
     return (
       <div>
       {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
-      <h1 className="text-3xl font-bold underline"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, veniam?</h1>
-      <button>Button</button>
+      <h1 className="text-3xl font-bold underline p-10"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, veniam?</h1>
+      <button className="btn btn-outline btn-secondary">Secondary</button>
       <input type="checkbox" aria-label="Checkbox" className="btn" />
       </div>
     );
