@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.http import JsonResponse
 
 from .models import Bin, Measurement, Ranking
 from .forms import BinForm, MeasurementForm
@@ -135,3 +136,8 @@ def detail(request):
         "rankings": rankings,
     }
     return render(request, "binnetapp\detail.html", context)
+
+
+def test_react(request):
+
+    return JsonResponse({"message": "Hello, World!"})

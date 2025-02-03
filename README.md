@@ -3,6 +3,9 @@
 
 > Website for our MyScience Project "Binovation"
 
+Install [NodeJs](https://nodejs.org/en/download/)
+
+
 ## Setup
 
 Create a virtual environment to install dependencies in and activate it:
