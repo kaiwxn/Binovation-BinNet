@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import axios from "axios";
 import Navbar from "./navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
 	const [data, setData] = useState(0);
@@ -20,11 +20,13 @@ function App() {
 	return (
 		<>
 			<Navbar />
-			{data ? (
-				<pre className="text-black">{JSON.stringify(data, null, 2)}</pre>
-			) : (
-				"Loading..."
-			)}
+			{/* <BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/binnetapp/index" element={<Index />} />
+					<Route path="/binnetapp/detail" element={<Detail />} />
+				</Routes>
+			</BrowserRouter> */}
 		</>
 	);
 }

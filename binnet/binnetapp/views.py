@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 
 from .models import Bin, Measurement, Ranking
 from .forms import BinForm, MeasurementForm
@@ -118,6 +118,7 @@ def index(request):
         "formMeasurement": formMeasurement,
         "data": binData,
     }
+    return HttpResponse(context)
     return render(request, "binnetapp\index.html", context)
 
 
@@ -135,6 +136,7 @@ def detail(request):
         "bins": bins,
         "rankings": rankings,
     }
+    return HttpResponse(context)
     return render(request, "binnetapp\detail.html", context)
 
 
