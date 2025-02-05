@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
+import Navbar from "./navbar";
 
 function App() {
 	const [data, setData] = useState(0);
@@ -17,15 +18,14 @@ function App() {
 	}, []);
 
 	return (
-		<div>
-			{data ? <pre>{JSON.stringify(data, null, 2)}</pre> : "Loading..."}
-			<h1 className="text-3xl font-bold underline p-10">
-				{" "}
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, veniam?
-			</h1>
-			<button className="btn btn-outline btn-secondary">Secondary</button>
-			<input type="checkbox" aria-label="Checkbox" className="btn" />
-		</div>
+		<>
+			<Navbar />
+			{data ? (
+				<pre className="text-black">{JSON.stringify(data, null, 2)}</pre>
+			) : (
+				"Loading..."
+			)}
+		</>
 	);
 }
 
